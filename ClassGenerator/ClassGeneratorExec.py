@@ -13,7 +13,11 @@ def usage():
     parser.add_argument('-n','--name', help='class name . e.g. -n file ')
     parser.add_argument('-v','--virtual_decon', help='class has virtual deconstuctor . ')
     parser.add_argument('-o','--output_dir', help='output directory. e.g. -o path ')
-    parser.print_help()
+
+    try:
+        parser.print_usage()
+    except:
+        print ""
     print "usage example : python ClassGeneratorExec.py -I IMqtt -v 1 -N Mqtt -n MqttInstance "
     
 
