@@ -16,7 +16,7 @@ class CFunction(object):
 
     def _insert_function_name_to(self, file):
         full_func_name = '{0}\n'.format(self._ret ) 
-        full_func_name+= str('{0}(\n'.format( self._ret ))
+        full_func_name+= str('{0}(\n'.format( self._func ))
         for arg in self._args:
             full_func_name += "\t"
             full_func_name += arg

@@ -15,15 +15,15 @@ class CHeader(object):
         return ret
 
     def _insert_function_name_to(self, file):
-        ret =  "/*                           \n"
-        ret += " * "+ '\\' + "brief  "+self._func+"   \n"
-        ret += " *                          \n"
-        ret += " * \details comment         \n"
-        ret += " *                          \n"
+        ret =  "/*\n"
+        ret += " * \t{0}brief \t{1}\n".format('\\',self._func)
+        ret += " * \t\n"
+        ret += " * \t\details comment\n"
+        ret += " *\n"
         
-        full_func_name = self._ret + '\n' 
+        full_func_name = '{0}\n'.format( self._ret ) 
 
-        full_func_name+= str(self._func + '(\n')
+        full_func_name+= str('{0}(\n'.format(self._func))
         for arg in self._args:
             
             t_arg = arg.replace("__IN", "");
@@ -33,8 +33,8 @@ class CHeader(object):
                 comment = "[out]"
             if arg.replace("__IN", "") is not arg :
                 comment = "[in]"
-            ret += " * \param	"+comment + " " + t_arg + " comment\n"
-            full_func_name += "     "
+            ret += " * \param \t{0} {1} comment\n".format(comment,t_arg)
+            full_func_name += "\t"
             full_func_name += arg
             if arg is not self._args[len(self._args)-1]:
                  full_func_name += ' , '
