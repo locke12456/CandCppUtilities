@@ -1,6 +1,7 @@
 import Generator
 import InterfaceGenerator
 import HeaderGenertor
+import WriteAuthor
 from CppArg import CppArg
 class ClassGenerator(object):
     """description of class"""
@@ -23,6 +24,11 @@ class ClassGenerator(object):
         genheader.SetBaseClass( self.cpp )
         header = genheader.Build()
         self._generate_cpp(header)
+    def _write_author(self, cpp , cppfile ):
+        if cpp.author == "":
+            return
+        writer = WriteAuthor.WriteAuthor()
+        writer.Write( cppfile , cpp )
 
     def _write_constructor(self, cppfile):
         cppfile.Write("{0}::{0}()\n".format(self.filename))
@@ -41,6 +47,7 @@ class ClassGenerator(object):
     def _generate_cpp(self , header):
         filename = self.filename + ".cpp"
         cppfile  = Generator.Generator(filename)
+        self._write_author( self.cpp , cppfile )
         cppfile.Write('#include "{0}"\n'.format(header))
         self._write_using_namespace(cppfile)
         self._write_constructor(cppfile)

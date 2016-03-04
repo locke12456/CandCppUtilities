@@ -19,4 +19,4 @@ class HeaderGenertor(InterfaceGenerator.InterfaceGenerator):
             hfile.Write("{0}{0}~{1}();\n".format( self.autoforamt , self.filename ))
     def _write_include(self,hfile):
         if( len(self.cpp.interface) != 0 ):
-            hfile.Write('#include "{0}"\n'.format(self.cpp.interface[0]))
+            hfile.Write('#include "{0}.h"\n'.format(self.cpp.interface[0]))

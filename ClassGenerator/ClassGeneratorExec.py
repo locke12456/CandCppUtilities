@@ -1,3 +1,8 @@
+## 
+## Author : Locke Chen
+## E-Mail : locke12456@gmail.com
+## Language: Python2
+## 
 import ClassGenerator
 import CppArg
 import getopt
@@ -8,6 +13,8 @@ import os
 def usage():
     parser = argparse.ArgumentParser()
 
+    parser.add_argument('-a','--author', help=' ')
+    parser.add_argument('-e','--email', help=' ')
     parser.add_argument('-I','--interface', help=' ')
     parser.add_argument('-N','--namespace', help=' ')
     parser.add_argument('-n','--name', help='class name . e.g. -n file ')
@@ -39,6 +46,12 @@ def mapping_args( opts , cpp):
         if opt in ("-v", "--virtual_decon"):
             cpp.virtual_decon = True
             continue  
+        if opt in ("-a","--author"):
+            cpp.author = arg
+            continue
+        if opt in ("-e","--email"):
+            cpp.email = arg
+            continue
         if opt in ("-h", "--help"):
             usage()
             sys.exit(2)
@@ -49,7 +62,7 @@ def main(argv):
     dir = os.getcwd() + "\\ouput\\"
 
     try:                                
-        opts, args = getopt.getopt(argv, "hI:N:v:n:o:",["help","interface","namespace","virtual_decon","name","output_dir"])
+        opts, args = getopt.getopt(argv, "hI:N:a:e:v:n:o:",["help","interface","namespace","author","email","virtual_decon","name","output_dir"])
     except getopt.GetoptError as err:
         # print help information and exit:
         print str(err) # will print something like "option -a not recognized"         

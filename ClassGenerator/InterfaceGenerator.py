@@ -1,4 +1,5 @@
 import Generator
+import WriteAuthor
 from CppArg import CppArg
 class InterfaceGenerator(object):
     """description of class"""
@@ -15,6 +16,7 @@ class InterfaceGenerator(object):
     def _genator_header(self):
         filename = self.filename + ".h"
         hfile = Generator.Generator(filename)
+        self._write_author( self.cpp , hfile )
         defineHeader = self.filename.upper()
         hfile.Write("#ifndef __{0}_H__\n".format(defineHeader))
         hfile.Write("#define __{0}_H__\n".format(defineHeader))
@@ -30,11 +32,16 @@ class InterfaceGenerator(object):
         hfile.Write("#endif\n".format())
         hfile.Destory()
         return filename
+    def _write_author(self, cpp , cppfile ):
+        if cpp.author == "":
+            return
+        writer = WriteAuthor.WriteAuthor()
+        writer.Write( cppfile , cpp )
     def _write_constuctor(self,hfile):
         return
     def _write_deconstructor(self,hfile):
         if self.cpp.virtual_decon :
-            hfile.Write("{0}{0}virtual ~{1}() = 0;\n".format( self.autoforamt , self.filename ))
+            hfile.Write("{0}{0}virtual ~{1}() {2};\n".format( self.autoforamt , self.filename ,'{}'))
     def _write_include(self,hfile):
         return
     def _write_namespace_begin(self,hfile):
