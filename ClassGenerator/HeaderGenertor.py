@@ -8,6 +8,8 @@ class HeaderGenertor(InterfaceGenerator.InterfaceGenerator):
         self.filename = cpp.name
         return
     def SetBaseClass(self , cpp ):
+        if len(cpp.interface) == 0 :
+            return
         result = len(cpp.interface) != 0
         self.extend = ": public " + cpp.interface[0] if result else base
     def _write_constuctor(self, hfile):        
