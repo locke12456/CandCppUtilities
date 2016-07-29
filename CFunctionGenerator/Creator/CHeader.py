@@ -1,3 +1,4 @@
+from Creator.CWriteAuthor import CWriteAuthor
 class CHeader(object):
     """description of class"""
     _func = None
@@ -46,9 +47,10 @@ class CHeader(object):
         file.write(full_func_name)
 
 
-    def generate(self , header = None ):
+    def generate(self , header = None , auth = None):
 
         file = open( str(header + ".h" ) , 'ab')
+
 
         self._insert_function_name_to(file)
 

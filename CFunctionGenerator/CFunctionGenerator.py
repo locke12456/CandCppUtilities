@@ -2,9 +2,20 @@ import argparse , sys
 from Creator.CFunction import CFunction
 from Creator.GoogleTest import GoogleTest
 from Creator.CHeader import CHeader
+from Creator.CWriteAuthor import CppArg , CWriteAuthor
 parser = None
 def init(parser):
     parser = argparse.ArgumentParser(description='c function generator.')
+    
+    parser.add_argument('--auth',
+                       type=str, default=str(''), 
+                       help='')
+    parser.add_argument('--email',
+                       type=str, default=str(''), 
+                       help='')
+    parser.add_argument('--file',
+                       type=str, default=str(''), 
+                       help='')
     parser.add_argument('--test', action='store_true' , 
                        help='generate google test file')
     parser.add_argument('--header', 
@@ -29,14 +40,16 @@ def main(argv):
     parser = init(parser)
     try:
         args = parser.parse_args()
+        author = CppArg(args.file,args.auth,args.email)
         header = CHeader(args.ret[0],args.func,args.args)
         header.generate(args.header)
         create = CFunction(args.ret[0],args.func,args.args)
-        create.generate(args.header)
+        create.generate(args.header , author)
         test = GoogleTest(args.ret[0],args.func,args.args)
         test.generate(args.header)
-    except:
+    except Exception as e:
         usage(parser)
+        print e.message
 
 
     

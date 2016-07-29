@@ -1,3 +1,4 @@
+from Creator.CWriteAuthor import CWriteAuthor
 class CFunction(object):
     """description of class"""
     _func = None
@@ -33,9 +34,13 @@ class CFunction(object):
         ret+= "}"
         file.write(ret)
 
-    def generate(self , header = None ):
+    def generate(self , header = None , auth = None):
 
         file = open( str(self._func + ".c" ) , 'w+')
+
+        if auth is not None:
+            append_writer = CWriteAuthor()
+            append_writer.Write( file , auth )
 
         self._insert_header_include(file, header)
 

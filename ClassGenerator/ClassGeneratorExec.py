@@ -3,7 +3,7 @@
 ## E-Mail : locke12456@gmail.com
 ## Language: Python2
 ## 
-import ClassGenerator
+import ClassGenerator , GoogleTestGenerator
 import CppArg
 import getopt
 import sys
@@ -20,6 +20,8 @@ def usage():
     parser.add_argument('-n','--name', help='class name . e.g. -n file ')
     parser.add_argument('-v','--virtual_decon', help='class has virtual deconstuctor . ')
     parser.add_argument('-o','--output_dir', help='output directory. e.g. -o path ')
+    parser.add_argument('-G','--google_test', help='unit test ')
+    parser.add_argument('-s','--setup_teardown', help='unit test setup and teardown file.')
 
     try:
         parser.print_usage()
@@ -52,6 +54,12 @@ def mapping_args( opts , cpp):
         if opt in ("-e","--email"):
             cpp.email = arg
             continue
+        if opt in ("-G","--google_test"):
+            cpp.gtest = True
+            continue
+        if opt in ("-s","--setup_teardown"):
+            cpp.gtest_setup_teardown = arg
+            continue
         if opt in ("-h", "--help"):
             usage()
             sys.exit(2)
@@ -62,7 +70,7 @@ def main(argv):
     dir = os.getcwd() + "\\ouput\\"
 
     try:                                
-        opts, args = getopt.getopt(argv, "hI:N:a:e:v:n:o:",["help","interface","namespace","author","email","virtual_decon","name","output_dir"])
+        opts, args = getopt.getopt(argv, "hI:N:a:e:v:n:o:G:s:",["help","interface","namespace","author","email","virtual_decon","name","output_dir","google_test","setup_teardown"])
     except getopt.GetoptError as err:
         # print help information and exit:
         print str(err) # will print something like "option -a not recognized"         
@@ -80,7 +88,9 @@ def main(argv):
     dir = dir if output is None else output
     #pass
     classfile = ClassGenerator.ClassGenerator(cpp)
-
+    if cpp.gtest:
+        gtest = GoogleTestGenerator.GoogleTestGenerator(cpp)
+        gtest.Build()
     #classfile.SetBaseClass(cpp.interface.pop(0))
 
     classfile.Build()    
