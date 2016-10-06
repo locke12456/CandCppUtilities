@@ -39,6 +39,12 @@ class ClassGenerator(object):
         cppfile.Write("{0}::~{0}()\n".format(self.filename))
         cppfile.Write("{\n")
         cppfile.Write("}\n")
+    def _write_method(self,cppfile,type,method):
+        cppfile.Write("{0} {1}::{2}()\n".format( type , self.filename , method))
+        cppfile.Write("{\n")
+        if (type != "void"):
+            cppfile.Write("     return {0}();\n".format(type))
+        cppfile.Write("}\n")
 
     def _write_using_namespace(self, cppfile):
         if len(self.cpp.namespace) != 0:
