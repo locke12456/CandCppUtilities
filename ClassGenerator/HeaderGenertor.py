@@ -16,12 +16,18 @@ class HeaderGenertor(InterfaceGenerator.InterfaceGenerator):
         if( len(self.cpp.interface) != 0 ):
             hfile.Write('#include "{0}.h"\n'.format(self.cpp.interface[0]))
     def _write_constuctor(self, hfile):        
-        hfile.Write("{0}{0}{1}();\n".format(self.autoforamt,self.filename))
+        
+        format = self.format + self.autoformat
+        hfile.Write("{0}{1}();\n".format( format ,self.filename))
     def _write_deconstructor(self, hfile):
+        
+        format = self.format + self.autoformat
         if self.cpp.virtual_decon :
-            hfile.Write("{0}{0}virtual ~{1}();\n".format( self.autoforamt , self.filename ))
+            hfile.Write("{0}virtual ~{1}();\n".format( format , self.filename ))
         else:
-            hfile.Write("{0}{0}~{1}();\n".format( self.autoforamt , self.filename ))
+            hfile.Write("{0}~{1}();\n".format( format , self.filename ))
     def _write_method(self,hfile,type,method):
-        hfile.Write("{0}{0}virtual {1} {2}();\n".format( self.autoforamt , type , method))
+
+        format = self.format + self.autoformat
+        hfile.Write("{0}virtual {1} {2}();\n".format( format , type , method))
         

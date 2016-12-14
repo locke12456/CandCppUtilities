@@ -32,6 +32,8 @@ def usage():
 
 def set_name(cpp,val):
     cpp.name = val
+def split_namespace(cpp,arg):
+    cpp.namespace = cpp.namespace.split("::")
 
 def mapping_args( opts , cpp):
     output = None
